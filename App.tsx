@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import HomeScreen from './pantallas/pantallaHome'
+import AddTodoScreen from './pantallas/pantallaAddTodo'
+import { TodoProvider } from './context/TodoContext' // Asegúrate de que TodoProvider esté aquí
+import { RootTabParamList } from './types' // Importa el tipo de navegación
 
-export default function App() {
+const Tab = createBottomTabNavigator<RootTabParamList>() //Uso del tipo de navegación
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <TodoProvider>
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="AddTodo" component={AddTodoScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </TodoProvider>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
